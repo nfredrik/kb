@@ -1,5 +1,5 @@
 [color]
-        ui = auto
+	ui = auto
 [alias]
 	co = checkout
 	ci = commit
@@ -8,8 +8,9 @@
 	rb = rebase
 	fe = fetch
 	undo = reset --hard
-	wtfchanged = log --stat --pretty=format:\"%C(yellow)%h%C(cyan)%d%C(reset) (%ar - %C(red)%an%C(reset)) %n%B\"
+	wtfchanged = log --stat --find-renames --pretty=format:\"%C(yellow)%h%C(cyan)%d%C(reset) (%ar - %C(red)%an%C(reset)) %n%B\"
 	hist = log --graph --date=short --pretty=format:\"%C(yellow)%h %C(green)%ad%C(reset) |%C(cyan)%d%C(reset) %s (%C(red)%an%C(reset))\"
+	cdiff = diff --cached --find-renames
 	type = cat-file -t
 	dump = cat-file -p
 	todo = grep -ie todo -ie fixme
