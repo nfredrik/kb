@@ -14,4 +14,4 @@
 	type = cat-file -t
 	dump = cat-file -p
 	todo = grep -ie todo -ie fixme
-
+	authors = "!git log --format='%an <%ae>' | sort -u"
