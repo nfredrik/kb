@@ -28,3 +28,8 @@
 
 	update = !git fe && git ff
 
+	aliases = "!git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'"
+	ignored = !git ls-files --others -i --exclude-standard --directory
+	s = status -s
+	cb = checkout -b 
+	who = !git config --get-regexp 'user.email' | tail -n 1 | cut -d @ -f 2
