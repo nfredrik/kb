@@ -20,6 +20,7 @@
 	fe = fetch
 	ff = !git rb `git rev-parse --abbrev-ref --symbolic-full-name @{u}`
 	fp = format-patch
+	cp = cherry-pick
 	st = status
 	s  = status -s
 
