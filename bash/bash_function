@@ -1,0 +1,71 @@
+# Créer une archive pour un repertoire donne.
+mktar() { tar cvf  "${1%%/}.tar"     "${1%%/}/"; }
+mktgz() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
+mktbz() { tar cvjf "${1%%/}.tar.bz2" "${1%%/}/"; }
+
+# ex - Extraire une archive
+# usage: ex <fichier>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjvf $1   ;;
+      *.tar.gz)    tar xzvf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xvf $1    ;;
+      *.tbz2)      tar xjvf $1   ;;
+      *.tgz)       tar xzvf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo -e "${bldred}'$1' ne peut pas etre decompresse avec ex()" ;;
+    esac
+  else
+    echo -e "\n${bldred}'$1' n'est pas un fichier valide"
+  fi
+}
+
+# Reduire la taille du pwd dans le prompt de ligne de commande
+function truncate_pwd {
+  newPWD="${PWD/#$HOME/~}"
+  local pwdmaxlen=30
+  if [ ${#newPWD} -gt $pwdmaxlen ]
+  then
+     newPWD="...${newPWD: -$pwdmaxlen}"
+  fi
+}
+
+# Generation de mot de passe avec taille (par defaut: 16carac.)
+function genpasswd() {
+  local l=$1
+  [ "$l" == "" ] && l=16
+  tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+}
+
+# Mise a jour du script de completion maven avec fichier sur github
+function update_mvn_bash() {
+  if [ -f ~/.bash_mvn_completion.bash ]; then
+    cp ~/.bash_mvn_completion.bash ~/.bash_mvn_completion-`date +"%Y%m%d%k%M%S"`.bash
+  fi
+  curl https://raw.github.com/obazoud/maven-bash-completion/master/bash_completion.bash > ~/.bash_mvn_completion.bash
+}
+
+# Creation d'un dossier et deplacement du pwd
+function co() {
+  [ $# -ne 1 ] && return
+  mkdir -p $1 && cd $1
+}
+
+# Creation d'une structure maven dans le dossier courant ou en parametre
+function mkmvn(){
+    local base=$1
+    [ "$base" == "" ] && base="."
+    mkdir -p $base/src/{main,test}/{java,resources}
+}
+
+# Generation d'un pdf (>file.pdf) a partir du code source en parametre
+function kindlecode(){
+    enscript -Mkindle -E -p- "$@" | ps2pdf - -
+}
